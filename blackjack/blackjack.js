@@ -9,11 +9,13 @@
  */
 function Deck (){
     this.arrayOfCards = [];
+
     this.creatingCardObjects = function(){
         for(var i=0; i<52; i++){
             this.arrayOfCards.push($("<div>"))
         }
     };
+
     this.creatingCardObjects(); //Just for testing
 
     this.cardSuitesAndNumbers = {
@@ -24,49 +26,54 @@ function Deck (){
     };
 
     this.puttingValuesIntoCardSuitesAndNumbers = function(){
-        for(var value in this.cardSuitesAndNumbers) {
+        for(var suite in this.cardSuitesAndNumbers) {
             var i = 1;
-            while (i < 11) {
-                this.cardSuitesAndNumbers[value].push(i);
-                i++
-            }
-            while (i < 13) {
-                this.cardSuitesAndNumbers[value].push(10);
+            while (i < 15) {
+                this.newNestedObject = {};
+                this.newNestedObjectType = function () {
+                    switch (true) {
+                        case i === 1:
+                            this.cardType = "A";
+                            break;
+                        case i > 1 && i < 11:
+                            this.cardType = "number";
+                            break;
+                        case i === 11:
+                            this.cardType = "J";
+                            break;
+                        case i === 12:
+                            this.cardType = "Q";
+                            break;
+                        case i === 13:
+                            this.cardType = "K";
+                            break;
+                        case i === 14:
+                            this.cardType = "A";
+                    }
+                    return this.cardType
+                };
+                this.newNestedObject.type = this.newNestedObjectType();
+
+                this.newNestedObjectValue = function(){
+                    switch(true){
+                        case i<11:
+                            this.cardValue = i;
+                            break;
+                        case i>=11 && i<14:
+                            this.cardValue = 10;
+                            break;
+                        case i === 14:
+                            this.cardValue = 11;
+                    }
+                    return this.cardValue
+                };
+                this.newNestedObject.value = this.newNestedObjectValue();
+                this.cardSuitesAndNumbers[suite].push(this.newNestedObject);
                 i++
             }
         }
     };
-
-        this.randomSuiteArray = [];
-        this.addSuitesToRandomSuiteArray = function(){
-            for(suite in this.cardSuitesAndNumbers){
-                this.randomSuiteArray.push(suite);
-            }
-        };
-        this.addSuitesToRandomSuiteArray(); //Just for testing
-
-    this.randomCardValue = function(){
-        return this.randomCardValueNumber = Math.floor(Math.random()*9)+1;
-    };
-    thetest4 = this.randomCardValue();//Just for testing
-
-    this.assignSuitesAndValuesToCards = function(){
-        for(var i=0; i<this.arrayOfCards.length; i++){
-            this.card = this.arrayOfCards[i];
-            this.card.addClass(function(){
-                this.randomSuiteArray[i]
-            });/
-            this.card.val(function(){
-
-            })
-            // this.test = this.cardSuitesAndNumbers[this.randomSuiteArray[i]]
-        }
-    };
-
-    theNumber = this.puttingValuesIntoCardSuitesAndNumbers(); //Just for testing
-    debugger;
-    thetest2 = this.assignSuitesAndValuesToCards();//Just for testing
-    debugger;
+    this.puttingValuesIntoCardSuitesAndNumbers();
 }
 
 
