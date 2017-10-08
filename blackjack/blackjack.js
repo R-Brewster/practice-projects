@@ -10,77 +10,61 @@
 function Deck (){
     this.arrayOfCards = [];
     this.creatingCardObjects = function(){
-        for(i=0; i<52; i++){
+        for(var i=0; i<52; i++){
             this.arrayOfCards.push($("<div>"))
         }
     };
-    this.cardSuitesAndNumbers = [
-        {hearts: []},
-        {diamonds: []},
-        {spades: []},
-        {clubs: []}
-    ];
+    this.creatingCardObjects();
+
+    this.cardSuitesAndNumbers = {
+    hearts: [],
+    diamonds: [],
+    spades: [],
+    clubs: []
+    };
 
     this.numbersToAssignToCards = function(){
-        //This statement needs to be condensed, but need to dynamically change .hearts and .diamonds,etc to do so
-        for(var i=0; i<5; i++) {
+        for(var value in this.cardSuitesAndNumbers) {
+            var i = 1;
             while (i < 11) {
-                this.cardSuitesAndNumbers[0].hearts.push(i);
+                this.cardSuitesAndNumbers[value].push(i);
                 i++
             }
             while (i < 13) {
-                this.cardSuitesAndNumbers[0].hearts.push(10);
+                this.cardSuitesAndNumbers[value].push(10);
                 i++
             }
-
-            // if (i = 0) {
-            //     while (i < 11) {
-            //         this.cardSuitesAndNumbers[0].hearts.push(0);
-            //         i++
-            //     }
-            //     while (i < 13) {
-            //         this.cardSuitesAndNumbers[(0)].hearts.push(10);
-            //         i++
-            //     }
-            // }
-            // else if(i = 1){
-            //     while (i < 11) {
-            //         this.cardSuitesAndNumbers[1].diamonds.push(1);
-            //         i++
-            //     }
-            //     while (i < 13) {
-            //         this.cardSuitesAndNumbers[1].diamonds.push(10);
-            //         i++
-            //     }
-            // }
-            // else if(i = 2){
-            //     while (i < 11) {
-            //         this.cardSuitesAndNumbers[2].spades.push(2);
-            //         i++
-            //     }
-            //     while (i < 13) {
-            //         this.cardSuitesAndNumbers[2].spades.push(10);
-            //         i++
-            //     }
-            // }
-            // else if(i = 3){
-            //     while (i < 11) {
-            //         this.cardSuitesAndNumbers[3].clubs.push(3);
-            //         i++
-            //     }
-            //     while (i < 13) {
-            //         this.cardSuitesAndNumbers[3].clubs.push(10);
-            //         i++
-            //     }
-            // }
-            // i++
         }
-
     };
-    this.randomizeArrayOfNumbersToAssignToCards = function(){
 
+    this.randomSuite = function(){
+        this.randomSuiteArray = [];
+        this.addSuitesToRandomSuiteArray = function(){
+            for(suite in this.cardSuitesAndNumbers){
+                this.randomSuiteArray.push(suite);
+            }
+        };
+        this.addSuitesToRandomSuiteArray();
+        return this.randomSuiteArray;
     };
-    theNumber = this.numbersToAssignToCards();
+    thetest3 = this.randomSuite();//Just for testing
+
+    this.randomCardValue = function(){
+        return this.randomCardValueNumber = Math.floor(Math.random()*9)+1;
+    };
+    thetest4 = this.randomCardValue();//Just for testing
+
+    this.assignSuitesAndValuesToCards = function(){
+
+        for(var i=0; i<this.arrayOfCards.length; i++){
+            this.card = this.arrayOfCards[i];
+            this.test = this.cardSuitesAndNumbers[this.randomSuite()[i]]
+        }
+    };
+
+    theNumber = this.numbersToAssignToCards(); //Just for testing
+    debugger;
+    thetest2 = this.assignSuitesAndValuesToCards();//Just for testing
     debugger;
 }
 
