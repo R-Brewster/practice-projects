@@ -14,7 +14,7 @@ function Deck (){
             this.arrayOfCards.push($("<div>"))
         }
     };
-    this.creatingCardObjects();
+    this.creatingCardObjects(); //Just for testing
 
     this.cardSuitesAndNumbers = {
     hearts: [],
@@ -23,7 +23,7 @@ function Deck (){
     clubs: []
     };
 
-    this.numbersToAssignToCards = function(){
+    this.puttingValuesIntoCardSuitesAndNumbers = function(){
         for(var value in this.cardSuitesAndNumbers) {
             var i = 1;
             while (i < 11) {
@@ -37,17 +37,13 @@ function Deck (){
         }
     };
 
-    this.randomSuite = function(){
         this.randomSuiteArray = [];
         this.addSuitesToRandomSuiteArray = function(){
             for(suite in this.cardSuitesAndNumbers){
                 this.randomSuiteArray.push(suite);
             }
         };
-        this.addSuitesToRandomSuiteArray();
-        return this.randomSuiteArray;
-    };
-    thetest3 = this.randomSuite();//Just for testing
+        this.addSuitesToRandomSuiteArray(); //Just for testing
 
     this.randomCardValue = function(){
         return this.randomCardValueNumber = Math.floor(Math.random()*9)+1;
@@ -55,14 +51,19 @@ function Deck (){
     thetest4 = this.randomCardValue();//Just for testing
 
     this.assignSuitesAndValuesToCards = function(){
-
         for(var i=0; i<this.arrayOfCards.length; i++){
             this.card = this.arrayOfCards[i];
-            this.test = this.cardSuitesAndNumbers[this.randomSuite()[i]]
+            this.card.addClass(function(){
+                this.randomSuiteArray[i]
+            });/
+            this.card.val(function(){
+
+            })
+            // this.test = this.cardSuitesAndNumbers[this.randomSuiteArray[i]]
         }
     };
 
-    theNumber = this.numbersToAssignToCards(); //Just for testing
+    theNumber = this.puttingValuesIntoCardSuitesAndNumbers(); //Just for testing
     debugger;
     thetest2 = this.assignSuitesAndValuesToCards();//Just for testing
     debugger;
