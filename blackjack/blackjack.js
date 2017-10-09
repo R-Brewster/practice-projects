@@ -2,78 +2,123 @@
 
 
 /***************************************************************************************************
- * Deck - makes a deck of cards in random order
- * @param  {undefined} none
+ * Suite - makes a suite of cards
+ * @param  suite
  * @returns {undefined} none
  * @calls {undefined} none
  */
-function Deck (){
+function Suite (suite) {
     this.arrayOfCards = [];
 
-    this.creatingCardObjects = function(){
-        for(var i=0; i<52; i++){
+    this.creatingCardObjects = function () {
+        for (var i = 0; i < 13; i++) {
             this.arrayOfCards.push($("<div>"))
         }
     };
 
     this.creatingCardObjects(); //Just for testing
 
-    this.cardSuitesAndNumbers = {
-    hearts: [],
-    diamonds: [],
-    spades: [],
-    clubs: []
+    this.cardNumbers = [];
+
+    this.puttingValuesIntoCardNumbers = function () {
+        for(var i=1; i<14; i++) {
+            this.newNestedObject = {};
+            this.newNestedObjectType = function () {
+                switch (true) {
+                    case i === 1:
+                        this.cardType = "A";
+                        break;
+                    case i > 1 && i < 11:
+                        this.cardType = "number";
+                        break;
+                    case i === 11:
+                        this.cardType = "J";
+                        break;
+                    case i === 12:
+                        this.cardType = "Q";
+                        break;
+                    case i === 13:
+                        this.cardType = "K";
+                }
+                return this.cardType
+            };
+
+            this.newNestedObject.type = this.newNestedObjectType();
+
+            this.newNestedObjectValue = function () {
+                switch (true) {
+                    case i === 1:
+                        this.cardValue = [1, 11];
+                    case i < 11:
+                        this.cardValue = i;
+                        break;
+                    case i >= 11 && i < 14:
+                        this.cardValue = 10;
+                }
+                return this.cardValue
+            };
+            this.newNestedObject.value = this.newNestedObjectValue();
+            this.cardNumbers.push(this.newNestedObject);
+        }
     };
 
-    this.puttingValuesIntoCardSuitesAndNumbers = function(){
-        for(var suite in this.cardSuitesAndNumbers) {
-            var i = 1;
-            while (i < 15) {
-                this.newNestedObject = {};
-                this.newNestedObjectType = function () {
-                    switch (true) {
-                        case i === 1:
-                            this.cardType = "A";
-                            break;
-                        case i > 1 && i < 11:
-                            this.cardType = "number";
-                            break;
-                        case i === 11:
-                            this.cardType = "J";
-                            break;
-                        case i === 12:
-                            this.cardType = "Q";
-                            break;
-                        case i === 13:
-                            this.cardType = "K";
-                            break;
-                        case i === 14:
-                            this.cardType = "A";
-                    }
-                    return this.cardType
-                };
-                this.newNestedObject.type = this.newNestedObjectType();
+    this.puttingValuesIntoCardNumbers();
 
-                this.newNestedObjectValue = function(){
-                    switch(true){
-                        case i<11:
-                            this.cardValue = i;
-                            break;
-                        case i>=11 && i<14:
-                            this.cardValue = 10;
-                            break;
-                        case i === 14:
-                            this.cardValue = 11;
-                    }
-                    return this.cardValue
-                };
-                this.newNestedObject.value = this.newNestedObjectValue();
-                this.cardSuitesAndNumbers[suite].push(this.newNestedObject);
-                i++
+    this.givingCardsNumbers = function() {
+        for(var i=0; i<this.arrayOfCards.length; i++) {
+            this.arrayOfCards[i].attr({
+                type: this.cardNumbers[i].type,
+                value: this.cardNumbers[i].value,
+                class: suite
+            })
+        }
+
+    };
+
+    this.givingCardsNumbers()
+}
+
+/***************************************************************************************************
+ * Deck - makes a deck of cards from several suites
+ * @param  suite
+ * @returns {undefined} none
+ * @calls {undefined} none
+ */
+
+
+function Deck(){
+    this.allOfTheSuites = [
+        this.suiteHearts = new Suite("hearts"),
+        this. suiteDiamonds = new Suite("diamonds"),
+        this. suiteClubs = new Suite("clubs"),
+        this. suiteSpades = new Suite("spades")
+    ];
+
+    this.deckArray = [];
+
+    this.separateCards = function(){
+        for(var i=0; i<4; i++){
+            for(var j=0; j<13; j++){
+                this.deckArray.push(this.allOfTheSuites[i].arrayOfCards[j]);
             }
         }
     };
-    this.puttingValuesIntoCardSuitesAndNumbers();
+    this.separateCards();
+
+    this.randomizeCards = function() {
+
+        this.deckRandomized = function randomizeArr(arr) {
+            var array = [];
+            while (arr.length > 0) {
+                var randomNumber = Math.floor(Math.random() * arr.length);
+                array.push(arr[randomNumber]);
+                arr.splice(randomNumber, 1)
+            }
+            return array
+        };
+       return this.deckRandomized(this.deckArray)
+    };
+    this.deckArrayRandomized = this.randomizeCards()
 }
 
 
@@ -106,12 +151,14 @@ function Deck (){
  * @calls {undefined} none
  */
 
+$(document).ready(initializeGame());
+
 function initializeGame(){
-    // this.newDeck = new Deck();
+    this.newDeck = new Deck();
 
 }
 
-var newDeck = new Deck();
+// var newSuite = new Suite();
 
 
 
